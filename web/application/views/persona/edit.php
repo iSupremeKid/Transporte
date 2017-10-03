@@ -46,7 +46,7 @@
 						<label for="persona_perfil_id" class="control-label"><span class="text-danger">*</span>Persona Perfil</label>
 						<div class="form-group">
 							<select name="persona_perfil_id" class="form-control">
-								<option value="">select persona_perfil</option>
+								<option value="">Seleccione persona perfil</option>
 								<?php
 								foreach($all_persona_perfil as $persona_perfil)
 								{
