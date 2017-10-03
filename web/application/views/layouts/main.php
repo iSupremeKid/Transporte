@@ -254,7 +254,7 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Transporte Unidad</span>
+                                <i class="fa fa-car"></i> <span>Unidad de transporte</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
