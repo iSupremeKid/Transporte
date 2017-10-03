@@ -2,7 +2,7 @@
     <div class="col-md-12">
       	<div class="box box-info">
             <div class="box-header with-border">
-              	<h3 class="box-title">Tipo Usuario Add</h3>
+              	<h3 class="box-title">Agregar tipo de usuario</h3>
             </div>
             <?php echo form_open('tipo_usuario/add'); ?>
           	<div class="box-body">
@@ -14,17 +14,11 @@
 							<span class="text-danger"><?php echo form_error('nombre');?></span>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<label for="estado" class="control-label">Estado</label>
-						<div class="form-group">
-							<input type="text" name="estado" value="<?php echo $this->input->post('estado'); ?>" class="form-control" id="estado" />
-						</div>
-					</div>
 				</div>
 			</div>
           	<div class="box-footer">
             	<button type="submit" class="btn btn-success">
-            		<i class="fa fa-check"></i> Save
+            		<i class="fa fa-check"></i> Agregar
             	</button>
           	</div>
             <?php echo form_close(); ?>
