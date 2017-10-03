@@ -27,7 +27,7 @@
                 <!-- Logo -->
                 <a href="" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini">Transporte</span>
+                    <span class="logo-mini">T</span>
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg">Transporte</span>
                 </a>
@@ -90,7 +90,7 @@
                     </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="header">MAIN NAVIGATION</li>
+                        <li class="header">Menú</li>
                         <li>
                             <a href="<?php echo site_url();?>">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -163,7 +163,7 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Persona</span>
+                                <i class="fa fa-user-o"></i> <span>Persona</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
