@@ -20,7 +20,7 @@
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="<?php echo site_url('resources/css/_all-skins.min.css');?>">
     </head>
-    
+
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <header class="main-header">
@@ -228,14 +228,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Tipo Transporte</span>
+                                <i class="fa fa-car"></i> <span>Tipo de Transporte</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('tipo_transporte/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('tipo_transporte/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('tipo_transporte/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('tipo_transporte/index');?>"><i class="fa fa-list-ul"></i> Listar</a>
                                 </li>
 							</ul>
                         </li>
@@ -287,10 +287,10 @@
             <div class="content-wrapper">
                 <!-- Main content -->
                 <section class="content">
-                    <?php                    
+                    <?php
                     if(isset($_view) && $_view)
                         $this->load->view($_view);
-                    ?>                    
+                    ?>
                 </section>
                 <!-- /.content -->
             </div>
@@ -303,7 +303,7 @@
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
                 <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    
+
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -315,7 +315,7 @@
                     <!-- Stats tab content -->
                     <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
                     <!-- /.tab-pane -->
-                    
+
                 </div>
             </aside>
             <!-- /.control-sidebar -->
