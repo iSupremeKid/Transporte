@@ -86,7 +86,6 @@ class Transporte_unidad extends CI_Controller{
                 $params = array(
 					'tipo_transporte_id' => $this->input->post('tipo_transporte_id'),
 					'identificacion' => $this->input->post('identificacion'),
-					'estado' => $this->input->post('estado'),
                 );
 
                 $this->Transporte_unidad_model->update_transporte_unidad($id,$params);
