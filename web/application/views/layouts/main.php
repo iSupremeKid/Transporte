@@ -98,14 +98,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-exclamation-triangle"></i> <span>Alertum</span>
+                                <i class="fa fa-exclamation-triangle"></i> <span>Alerta</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('alertum/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('alertum/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('alertum/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('alertum/index');?>"><i class="fa fa-list-ul"></i> Listar</a>
                                 </li>
 							</ul>
                         </li>
@@ -150,14 +150,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Paradero</span>
+                                <i class="fa fa-thumbs-o-up"></i> <span>Paradero</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('paradero/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('paradero/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('paradero/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('paradero/index');?>"><i class="fa fa-list-ul"></i> Listar</a>
                                 </li>
 							</ul>
                         </li>
