@@ -98,7 +98,7 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Alertum</span>
+                                <i class="fa fa-exclamation-triangle"></i> <span>Alertum</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
