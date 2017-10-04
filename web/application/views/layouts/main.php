@@ -111,14 +111,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Asistencium</span>
+                                <i class="fa fa-clock-o"></i> <span>Asistencia</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('asistencium/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('asistencium/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('asistencium/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('asistencium/index');?>"><i class="fa fa-list-ul"></i> Listar</a>
                                 </li>
 							</ul>
                         </li>
