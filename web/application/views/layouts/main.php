@@ -93,8 +93,21 @@
                         <li class="header">Menú</li>
                         <li>
                             <a href="<?php echo site_url();?>">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                <i class="fa fa-dashboard"></i> <span>Reportes</span>
                             </a>
+                            <ul class="treeview-menu">
+								<li>
+                                    <a href="#"><i class="fa fa-dashboard"></i> Conductor</a>
+                                    <ul class="treeview-menu">
+        								<li>
+                                            <a href="<?php echo site_url('reporte/asistencia');?>"><i class="fa fa-dashboard"></i> Asistencia</a>
+                                        </li>
+        							</ul>
+                                </li>
+								<li>
+                                    <a href="<?php echo site_url('alertum/index');?>"><i class="fa fa-dashboard"></i> Listar</a>
+                                </li>
+							</ul>
                         </li>
 						<li>
                             <a href="#">

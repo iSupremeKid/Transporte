@@ -20,6 +20,14 @@ class Asistencium_model extends CI_Model
     }
 
     /*
+     * Lista las asistencias por usuario_id
+     */
+    function get_asistenciaPorUsuario($usuario_id){
+      return $this->db->get_where('asistencia',array('usuario_id'=>$usuario_id))->result_array();
+    }
+
+
+    /*
      * Get all asistencia
      */
     function get_all_asistencia()

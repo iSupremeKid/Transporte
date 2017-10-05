@@ -56,4 +56,14 @@ class Usuario_model extends CI_Model
     {
         return $this->db->delete('usuario',array('id'=>$id));
     }
+
+    function listarConductores(){
+      $this->db->select('usu.*, pe.nombres, pe.apellido_paterno, pe.apellido_materno, tu.nombre as nombre_tipo_usuario');
+      $this->db->from('usuario usu, persona pe, tipo_usuario tu');
+      $this->db->where('usu.persona_id = pe.id AND usu.tipo_usuario_id = tu.id AND tu.nombre = "Conductor"');
+      $this->db->order_by('usu.id', 'desc');
+      return $this->db->get()->result_array();
+    }
+
+
 }
