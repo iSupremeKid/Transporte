@@ -124,14 +124,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Conductor Transporte</span>
+                                <i class="fa fa-bus"></i><i class="fa fa-user-o"></i> <span>Conductor Transporte</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('conductor_transporte/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('conductor_transporte/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('conductor_transporte/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('conductor_transporte/index');?>"><i class="fa fa-list-ul"></i> Listar</a>
                                 </li>
 							</ul>
                         </li>
