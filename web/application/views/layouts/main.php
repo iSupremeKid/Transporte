@@ -189,14 +189,14 @@
                         </li>
 						<li>
                             <a href="#">
-                                <i class="fa fa-desktop"></i> <span>Persona Viaje</span>
+                                <i class="fa fa-ticket"></i> <span>Persona Viaje</span>
                             </a>
                             <ul class="treeview-menu">
 								<li class="active">
-                                    <a href="<?php echo site_url('persona_viaje/add');?>"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="<?php echo site_url('persona_viaje/add');?>"><i class="fa fa-plus"></i> Agregar</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url('persona_viaje/index');?>"><i class="fa fa-list-ul"></i> Listing</a>
+                                    <a href="<?php echo site_url('persona_viaje/index');?>"><i class="fa fa-list-ul"></i> Listasr</a>
                                 </li>
 							</ul>
                         </li>
