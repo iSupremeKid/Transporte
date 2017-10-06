@@ -53,7 +53,7 @@ class Alertum extends CI_Controller{
             $params = array(
 				'usuario_id' => $this->input->post('usuario_id'),
 				'tipo_alerta_id' => $this->input->post('tipo_alerta_id'),
-				'mensaje' => $this->input->post('mensaje'),
+				'mensaje' => strtoupper($this->input->post('mensaje')),
 				'fecha' => $this->input->post('fecha'),
 				'estado' => 1,
             );
@@ -111,7 +111,7 @@ class Alertum extends CI_Controller{
                 $params = array(
 					'usuario_id' => $this->input->post('usuario_id'),
 					'tipo_alerta_id' => $this->input->post('tipo_alerta_id'),
-					'mensaje' => $this->input->post('mensaje'),
+					'mensaje' => strtoupper($this->input->post('mensaje')),
 					'fecha' => $this->input->post('fecha'),
 					'estado' => $this->input->post('estado'),
                 );

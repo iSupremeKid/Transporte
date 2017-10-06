@@ -51,7 +51,7 @@ class Conductor_transporte extends CI_Controller{
 				'transporte_unidad_id' => $this->input->post('transporte_unidad_id'),
 				'usuario_id' => $this->input->post('usuario_id'),
 				'paradero_id' => $this->input->post('paradero_id'),
-				'tipo' => $this->input->post('tipo'),
+				'tipo' => strtoupper($this->input->post('tipo')),
 				'fecha' => $this->input->post('fecha'),
 				'estado' => 1,
             );
@@ -109,7 +109,7 @@ class Conductor_transporte extends CI_Controller{
 					'transporte_unidad_id' => $this->input->post('transporte_unidad_id'),
 					'usuario_id' => $this->input->post('usuario_id'),
 					'paradero_id' => $this->input->post('paradero_id'),
-					'tipo' => $this->input->post('tipo'),
+					'tipo' => strtoupper($this->input->post('tipo')),
 					'fecha' => $this->input->post('fecha')
                 );
 
