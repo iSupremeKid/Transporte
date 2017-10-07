@@ -37,9 +37,9 @@ class Api extends CI_Controller{
     $params = array(
       'telefono' => $this->input->post('telefono'),
       'persona_perfil_id' => 1,
-      'nombres' => strtoupper($this->input->post('nombres')),
-      'apellido_paterno' => strtoupper($this->input->post('apepat')),
-      'apellido_materno' => strtoupper($this->input->post('apemat')),
+      'nombres' => $this->input->post('nombres'),
+      'apellido_paterno' => $this->input->post('apepat'),
+      'apellido_materno' => $this->input->post('apemat'),
       'identificacion' => $this->input->post('dni'),
       'saldo_disponible' => 0,
       'estado' => 1,

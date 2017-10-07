@@ -78,7 +78,7 @@ class Persona extends CI_Controller{
 				'nombres' => strtoupper($this->input->post('nombres')),
 				'apellido_paterno' => strtoupper($this->input->post('apellido_paterno')),
 				'apellido_materno' => strtoupper($this->input->post('apellido_materno')),
-				'identificacion' => $this->input->post('identificacion'),
+				'identificacion' => strtoupper($this->input->post('identificacion')),
 				'saldo_disponible' => $this->input->post('saldo_disponible'),
 				'token_culqi' => $this->input->post('token_culqi'),
 				'estado' => 1,
@@ -163,7 +163,7 @@ class Persona extends CI_Controller{
 					'nombres' => strtoupper($this->input->post('nombres')),
 					'apellido_paterno' => strtoupper($this->input->post('apellido_paterno')),
 					'apellido_materno' => strtoupper($this->input->post('apellido_materno')),
-					'identificacion' => $this->input->post('identificacion'),
+					'identificacion' => strtoupper($this->input->post('identificacion')),
 					'saldo_disponible' => $this->input->post('saldo_disponible'),
 					'token_culqi' => $this->input->post('token_culqi')
                 );
