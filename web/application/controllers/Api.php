@@ -105,4 +105,52 @@ class Api extends CI_Controller{
     }
   }
 
+  function purchaseCallBack(){
+
+    $this->load->model('Persona_model');
+    $this->load->model('Historial_pago_model');
+    $persona_id = $this->input->post('id');
+    $monto = $this->input->post('amount');
+    $tarjeta = $this->input->post('card');
+    $fecha = date('Y-m-d h:i:s');
+
+    $params = array(
+      'persona_id' => $persona_id,
+      'origen' => 1,
+      'monto' => $monto,
+      'fecha' => $fecha,
+      'tarjeta' => $tarjeta,
+      'estado' => 1,
+    );
+
+    $this->Historial_pago_model->add_historial_pago($params);
+
+    $persona = $this->Persona_model->get_persona($persona_id);
+    $saldo_disponible = $persona['saldo_disponible'];
+    $nuevo_saldo = $saldo_disponible + $monto;
+
+
+    $params = array(
+      'saldo_disponible' => $nuevo_saldo
+    );
+
+    $actualizado = $this->Persona_model->update_persona($persona_id, $params);
+
+    if ($actualizado) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $this->Persona_model->get_persona($persona_id)
+              )));
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+
+  }
+
 }
