@@ -75,14 +75,15 @@ class Persona extends CI_Controller{
             $params = array(
 				'telefono' => $this->input->post('telefono'),
 				'persona_perfil_id' => $this->input->post('persona_perfil_id'),
-				'nombres' => $this->input->post('nombres'),
-				'apellido_paterno' => $this->input->post('apellido_paterno'),
-				'apellido_materno' => $this->input->post('apellido_materno'),
-				'identificacion' => $this->input->post('identificacion'),
+				'nombres' => strtoupper($this->input->post('nombres')),
+				'apellido_paterno' => strtoupper($this->input->post('apellido_paterno')),
+				'apellido_materno' => strtoupper($this->input->post('apellido_materno')),
+				'identificacion' => strtoupper($this->input->post('identificacion')),
 				'saldo_disponible' => $this->input->post('saldo_disponible'),
 				'token_culqi' => $this->input->post('token_culqi'),
 				'estado' => 1,
             );
+
 
             $persona_id = $this->Persona_model->add_persona($params);
             redirect('persona/index');
@@ -159,10 +160,10 @@ class Persona extends CI_Controller{
                 $params = array(
 					'telefono' => $this->input->post('telefono'),
 					'persona_perfil_id' => $this->input->post('persona_perfil_id'),
-					'nombres' => $this->input->post('nombres'),
-					'apellido_paterno' => $this->input->post('apellido_paterno'),
-					'apellido_materno' => $this->input->post('apellido_materno'),
-					'identificacion' => $this->input->post('identificacion'),
+					'nombres' => strtoupper($this->input->post('nombres')),
+					'apellido_paterno' => strtoupper($this->input->post('apellido_paterno')),
+					'apellido_materno' => strtoupper($this->input->post('apellido_materno')),
+					'identificacion' => strtoupper($this->input->post('identificacion')),
 					'saldo_disponible' => $this->input->post('saldo_disponible'),
 					'token_culqi' => $this->input->post('token_culqi')
                 );

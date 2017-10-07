@@ -1,0 +1,28 @@
+<p style="margin: 0;">Credito:</p>
+<h1 id="balance"><sup>s/</sup><span>...<span></h1>
+<hr>
+<h4>Recargar saldo</h4>
+<div class="ui-field-contain">
+    <input type="number" id="" placeholder="Text input" value="">
+	<button></button>
+</div>
+<script>
+	$balance = $("h1#balance > span");
+	axios({
+        method: "get",
+        url: "http://www.rick-garcia.com/Transporte/api/checkUserExist/" + window.localStorage.getItem("telefono"),
+        data: {}
+    })
+    .then(function(response){
+    	response = response.data;
+    	$balance.html(response.data.saldo_disponible);
+    })
+    // Culqi.publicKey = 'pk_test_YY53OxKyEoHghSlI';
+    // Culqi.settings({
+    //     title: 'Transporte',
+    //     currency: 'PEN',
+    //     description: 'Carga de 5 soles',
+    //     amount: 500
+    // });
+    // Culqi.open();
+</script>

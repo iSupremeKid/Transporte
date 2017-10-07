@@ -58,8 +58,8 @@ class Paradero extends CI_Controller{
         {
             $params = array(
 				'tipo_transporte_id' => $this->input->post('tipo_transporte_id'),
-				'nombre' => $this->input->post('nombre'),
-				'direccion' => $this->input->post('direccion'),
+				'nombre' => strtoupper($this->input->post('nombre')),
+				'direccion' => strtoupper($this->input->post('direccion')),
 				'latitud' => $this->input->post('latitud'),
 				'longitud' => $this->input->post('longitud')
             );
@@ -118,8 +118,8 @@ class Paradero extends CI_Controller{
             {
                 $params = array(
 					'tipo_transporte_id' => $this->input->post('tipo_transporte_id'),
-					'nombre' => $this->input->post('nombre'),
-					'direccion' => $this->input->post('direccion'),
+					'nombre' => strtoupper($this->input->post('nombre')),
+					'direccion' => strtoupper($this->input->post('direccion')),
 					'latitud' => $this->input->post('latitud'),
 					'longitud' => $this->input->post('longitud')
                 );
