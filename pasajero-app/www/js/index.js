@@ -1,5 +1,5 @@
+var global_data = {};
 $(document).on('deviceready',function(){
-    var global_data = {}
     if(!!window.localStorage.getItem("id")){
         $.mobile.navigate( "#main" ,{});
     }
@@ -140,4 +140,5 @@ $(document).on('deviceready',function(){
         // alert($(this).data('page'))
     })
     $container.load("pantallas/cargar_saldo.html")
-})
+});
+

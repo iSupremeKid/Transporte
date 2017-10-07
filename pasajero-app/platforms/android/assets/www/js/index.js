@@ -1,5 +1,5 @@
+var global_data = {};
 $(document).on('deviceready',function(){
-    var global_data = {}
     if(!!window.localStorage.getItem("id")){
         $.mobile.navigate( "#main" ,{});
     }
@@ -81,6 +81,7 @@ $(document).on('deviceready',function(){
                         window.localStorage.setItem("nombre", user.data.nombres + " " + user.data.apellido_paterno);
                         window.localStorage.setItem("dni", user.data.identificacion);
                         window.localStorage.setItem("id", user.data.id);
+                        window.localStorage.setItem("telefono", user.data.telefono);
                         $.mobile.navigate( "#main" ,{});
                     }else{
                         $.mobile.navigate( "#registerUser" ,{});
@@ -110,6 +111,7 @@ $(document).on('deviceready',function(){
             window.localStorage.setItem("nombre", user.data.nombres + " " + user.data.apellido_paterno);
             window.localStorage.setItem("dni", user.data.identificacion);
             window.localStorage.setItem("id", user.data.id);
+            window.localStorage.setItem("telefono", user.data.telefono);
             $.mobile.navigate( "#main" ,{});
         })
     })
@@ -117,17 +119,26 @@ $(document).on('deviceready',function(){
 
     $( document ).on( "pagecreate", "#main", function() {
         $( document ).on( "swipeleft swiperight", "#main", function( e ) {
-            // We check if there is no open panel on the page because otherwise
-            // a swipe to close the left panel would also open the right panel (and v.v.).
-            // We do this by checking the data that the framework stores on the page element (panel: open).
             if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
                 if ( e.type === "swipeleft" ) {
                     $( "#sidebar" ).panel( "open" );
                 }
-                // else if ( e.type === "swiperight" ) {
-                //     $( "#left-panel" ).panel( "open" );
-                // }
             }
         });
     });
-})
+
+
+    $("#user_name_label").html(window.localStorage.getItem("nombre")).css('textTransform', 'capitalize');
+    $("#dni_label").html(window.localStorage.getItem("dni"));
+
+    var $container = $("#container");
+
+    $(".optMenu")
+    .click(function(){
+        $( "#sidebar" ).panel( "close" );
+        $container.load("pantallas/" + $(this).data('page') + ".html")
+        // alert($(this).data('page'))
+    })
+    $container.load("pantallas/cargar_saldo.html")
+});
+
