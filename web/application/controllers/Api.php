@@ -166,7 +166,7 @@ class Api extends CI_Controller{
       'origen' => 1,
       'monto' => $monto,
       'fecha' => $fecha,
-      'tarjeta' => $culqi_response['source']['card_number'],
+      'tarjeta' => $culqi_response->source->card_number,
       'estado' => 1,
     );
 
