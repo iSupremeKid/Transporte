@@ -39,7 +39,7 @@ class Persona_perfil extends CI_Controller{
 		if($this->form_validation->run())
         {
             $params = array(
-				       'nombre' => $this->input->post('nombre')
+				       'nombre' => strtoupper($this->input->post('nombre'))
             );
 
             $persona_perfil_id = $this->Persona_perfil_model->add_persona_perfil($params);

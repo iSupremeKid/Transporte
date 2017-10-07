@@ -63,8 +63,8 @@ class Usuario extends CI_Controller{
 				'persona_id' => $this->input->post('persona_id'),
 				'tipo_usuario_id' => $this->input->post('tipo_usuario_id'),
 				'password' => $this->input->post('password'),
-				'usuario' => $this->input->post('usuario'),
-				'email' => $this->input->post('email'),
+				'usuario' => strtoupper($this->input->post('usuario')),
+				'email' => strtoupper($this->input->post('email')),
 				'estado' => 1,
             );
 
@@ -132,7 +132,7 @@ class Usuario extends CI_Controller{
 					'persona_id' => $this->input->post('persona_id'),
 					'tipo_usuario_id' => $this->input->post('tipo_usuario_id'),
 					'password' => $this->input->post('password'),
-					'usuario' => $this->input->post('usuario'),
+					'usuario' => strtoupper($this->input->post('usuario')),
 					'email' => $this->input->post('email')
                 );
 

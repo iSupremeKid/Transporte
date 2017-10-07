@@ -39,7 +39,7 @@ class Tipo_transporte extends CI_Controller{
 		if($this->form_validation->run())
         {
             $params = array(
-				'nombre' => $this->input->post('nombre'),
+				'nombre' => strtoupper($this->input->post('nombre')),
 				'estado' => 1,
             );
 
@@ -75,7 +75,7 @@ class Tipo_transporte extends CI_Controller{
 			if($this->form_validation->run())
             {
                 $params = array(
-					               'nombre' => $this->input->post('nombre')
+					               'nombre' => strtoupper($this->input->post('nombre'))
                 );
 
                 $this->Tipo_transporte_model->update_tipo_transporte($id,$params);

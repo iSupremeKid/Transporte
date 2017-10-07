@@ -39,7 +39,7 @@ class Tipo_usuario extends CI_Controller{
 		if($this->form_validation->run())
         {
             $params = array(
-				'nombre' => $this->input->post('nombre'),
+				'nombre' => strtoupper($this->input->post('nombre')),
 				'estado' => 1,
             );
 
@@ -75,7 +75,7 @@ class Tipo_usuario extends CI_Controller{
 			if($this->form_validation->run())
             {
                 $params = array(
-					'nombre' => $this->input->post('nombre')
+					'nombre' => strtoupper($this->input->post('nombre'))
                 );
 
                 $this->Tipo_usuario_model->update_tipo_usuario($id,$params);
