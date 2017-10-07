@@ -6,6 +6,17 @@ class Api extends CI_Controller{
     parent::__construct();
   }
 
+  function _httpPost($url, $data)
+  {
+      $curl = curl_init($url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      $response = curl_exec($curl);
+      curl_close($curl);
+      return $response;
+  }
+
   function checkUserByEmail(){
 
   }
@@ -110,18 +121,62 @@ class Api extends CI_Controller{
     $this->load->model('Persona_model');
     $this->load->model('Historial_pago_model');
     $persona_id = $this->input->post('id');
-    $monto = $this->input->post('amount');
+    $monto = intval($this->input->post('amount')) / 100;
     $tarjeta = $this->input->post('card');
     $fecha = date('Y-m-d h:i:s');
+
+
+    $url = 'https://api.culqi.com/v2/charges';
+
+    $data = array(
+      "amount" => $this->input->post('amount'),
+      "currency_code" => "PEN",
+      "email" => $this->input->post('email'),
+      "source_id" => $this->input->post('token')
+    );
+
+    $data = json_encode($data);
+
+    $additional_headers = array(
+       'Authorization: Bearer sk_test_VQxECu6VAGZhaOUf',
+       'Accept: application/json',
+       'Content-Type: application/json'
+    );
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $additional_headers);
+
+    $server_output = curl_exec ($ch);
+
+    $culqi_response =  json_decode($server_output);
+
+
+
+
+
+
+
+
 
     $params = array(
       'persona_id' => $persona_id,
       'origen' => 1,
       'monto' => $monto,
       'fecha' => $fecha,
-      'tarjeta' => $tarjeta,
+      'tarjeta' => $culqi_response['source']['card_number'],
       'estado' => 1,
     );
+
+
+
+
+
+
+
+
 
     $this->Historial_pago_model->add_historial_pago($params);
 
