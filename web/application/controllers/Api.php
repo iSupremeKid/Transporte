@@ -1,3 +1,4 @@
+
 <?php
 
 class Api extends CI_Controller{
@@ -152,5 +153,4 @@ class Api extends CI_Controller{
     }
 
   }
-
 }
