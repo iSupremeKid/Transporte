@@ -18,7 +18,7 @@ class Api extends CI_Controller{
               ->set_content_type('application/json')
               ->set_output(json_encode(array(
                       'success' => true,
-                      'persona' => $persona
+                      'data' => $persona
               )));
     }else{
       return $this->output
@@ -48,10 +48,13 @@ class Api extends CI_Controller{
     $persona_id = $this->Persona_model->add_persona($params);
 
     if ($persona_id) {
+      $persona = $this->Persona_model->get_persona($persona_id);
+
       return $this->output
               ->set_content_type('application/json')
               ->set_output(json_encode(array(
-                      'success' => true
+                      'success' => true,
+                      'data' => $persona
               )));
     }else{
       return $this->output
@@ -60,8 +63,46 @@ class Api extends CI_Controller{
                       'success' => false
               )));
     }
-    
+
   }
 
+  function getTravelByPersonID($id){
+    $this->load->model('Persona_viaje_model');
+    $viajes = $this->Persona_viaje_model->get_persona_viaje_by_persona_id($id);
+    if ($viajes) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $viajes
+              )));
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+  }
+
+  function getBillingHistory($id){
+    $this->load->model('Historial_pago_model');
+    $historial = $this->Historial_pago_model->get_historial_pago_by_user($id);
+    if (empty($historial)) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $historial
+              )));
+    }
+  }
 
 }

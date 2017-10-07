@@ -42,8 +42,12 @@ class Reporte extends CI_Controller{
       show_error('El conductor que seleccionó no existe.');
     }
 
-
-
+  }
+  function viajes(){
+      $this->load->model('Persona_model');
+      $data['personas'] = $this->Persona_model->get_all_persona();
+      $data['_view'] = "reporte/viajes";
+      $this->load->view('layouts/main',$data);
   }
 
 }
