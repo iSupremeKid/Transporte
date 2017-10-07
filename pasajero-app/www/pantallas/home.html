@@ -1,0 +1,7 @@
+<center>
+	<h1>Mostrar al conductor</h1>
+	<div id="qrcode"></div>
+</center>
+<script>
+	$('#qrcode').qrcode(window.localStorage.getItem("dni"));
+</script>

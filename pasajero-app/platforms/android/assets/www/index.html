@@ -109,6 +109,7 @@
         <!-- <p id="user_name_label"></p> -->
         <p id="dni_label"></p>
         <div data-role="controlgroup" data-theme="a">
+            <a href="#" data-page="home" class="optMenu ui-btn ui-corner-all">Pagar</a>
             <a href="#" data-page="cargar_saldo" class="optMenu ui-btn ui-corner-all">Recargar saldo</a>
             <a href="#" data-page="mis_viajes" class="optMenu ui-btn ui-corner-all">Mis viajes</a>
             <a href="#" data-page="mis_recargas" class="optMenu ui-btn ui-corner-all">Mis recargas</a>
@@ -120,7 +121,7 @@
             <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext">Icon only</a> -->
         </div>
 
-        <a href="#" class="ui-btn ui-corner-all">Cerrar sesion</a>
+        <a href="#" id="btnCerrarSesion" class="ui-btn ui-corner-all">Cerrar sesion</a>
         <!-- <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right">Close</a> -->
         <div data-role="footer">
             <h4>v0.0.1-alpha</h4>
@@ -133,6 +134,8 @@
         <script src="https://checkout.culqi.com/v2"></script>
         <script>Culqi.publicKey = 'pk_test_YY53OxKyEoHghSlI';</script>
         <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+        <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+        <script type="text/javascript" src="js/moment.js"></script>
         <script type="text/javascript" src="bower_components/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

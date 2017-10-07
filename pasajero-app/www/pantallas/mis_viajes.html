@@ -1,0 +1,22 @@
+<h1>Historial de viajes</h1>
+<ul data-role="listview" id="history_travel_list" class="ui-listview">
+	<li class="ui-li-static ui-body-inherit">...</li>
+</ul>
+<script>
+	axios({
+        method: "get",
+        url: "http://www.rick-garcia.com/Transporte/api/getTravelByPersonID/" + window.localStorage.getItem("id"),
+        data: {}
+    })
+    .then(function(response){
+        var history = response.data;
+        var html_final = "";
+        
+        for(x in history.data){
+        	html_final += '<li class="ui-li-static ui-body-inherit">Paradero: ' + history.data[x]['paradero_nombre'] + '<br>Precio: s/' + history.data[x]['precio'] + '<br>' + moment(history.data[x]['fecha']).format('LLL') + '</li>'
+        }
+
+        $("#history_travel_list")
+        .html(html_final);
+    })
+</script>

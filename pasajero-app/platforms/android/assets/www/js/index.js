@@ -127,6 +127,15 @@ $(document).on('deviceready',function(){
         });
     });
 
+    $("#btnCerrarSesion")
+    .click(function(e){
+        e.preventDefault();
+        if(confirm("Deseas cerrar sesion?")){
+            window.localStorage.clear();
+            $.mobile.navigate( "#loginUserPhone" ,{});
+        }
+    })
+
 
     $("#user_name_label").html(window.localStorage.getItem("nombre")).css('textTransform', 'capitalize');
     $("#dni_label").html(window.localStorage.getItem("dni"));
@@ -139,6 +148,6 @@ $(document).on('deviceready',function(){
         $container.load("pantallas/" + $(this).data('page') + ".html")
         // alert($(this).data('page'))
     })
-    $container.load("pantallas/cargar_saldo.html")
+    $container.load("pantallas/home.html")
 });
 
