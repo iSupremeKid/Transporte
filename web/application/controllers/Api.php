@@ -21,6 +21,45 @@ class Api extends CI_Controller{
 
   }
 
+  function getAlertType(){
+    $this->load->model('Tipo_alertum_model');
+    $tipo_alerta = $this->Tipo_alertum_model->get_all_tipo_alerta();
+    if ($tipo_alerta) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $tipo_alerta
+              )));
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+  }
+
+  function getTransporteUnidad(){
+    $this->load->model('Transporte_unidad_model');
+    $transporte_unidad = $this->Transporte_unidad_model->get_all_transporte_unidad();
+    if ($transporte_unidad) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $transporte_unidad
+              )));
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+  }
+
+
   function checkUserExist($number){
     $this->load->model("Persona_model");
     $persona = $this->Persona_model->get_persona_by_number($number);
