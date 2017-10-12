@@ -21,6 +21,29 @@ class Api extends CI_Controller{
 
   }
 
+  function driverLogin(){
+    $user = $this->input->post('user');
+    $password = $this->input->post('password');
+
+    $this->load->model('Usuario_model');
+    $resultado = $this->Usuario_model->getUsuarioByUserAndPassword($user,$password);
+    if ($resultado) {
+       return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true,
+                      'data' => $resultado
+              )));
+    }else{
+       return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+  }
+
+
   function getAlertType(){
     $this->load->model('Tipo_alertum_model');
     $tipo_alerta = $this->Tipo_alertum_model->get_all_tipo_alerta();
