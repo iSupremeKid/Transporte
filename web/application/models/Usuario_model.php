@@ -19,6 +19,13 @@ class Usuario_model extends CI_Model
         return $this->db->get_where('usuario',array('id'=>$id))->row_array();
     }
 
+    function getUsuarioByUserAndPassword($usuario, $password){
+      $this->db->select("us.*, pe.nombres as nombre_persona, pe.apellido_paterno as apepat_persona, pe.apellido_materno as apemat_persona, tu.nombre as nombre_tipo_usuario");
+      $this->db->from("usuario us, persona pe, tipo_usuario tu");
+      $this->db->where("us.persona_id = pe.id AND us.tipo_usuario_id = tu.id AND us.usuario = '{$usuario}' AND us.password = '{$password}'");
+      return $this->db->get()->row_array();
+    }
+
     /*
      * Get all usuario
      */
