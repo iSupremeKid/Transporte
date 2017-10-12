@@ -1,0 +1,19 @@
+<button id="btnMarcarAsistencia">Marcar asistencia</button>
+<script>
+	$(document).ready(function(){
+		$("#btnMarcarAsistencia").click(function(){
+			// alert("id=" + window.localStorage.getItem("id"))
+			axios.post("http://www.rick-garcia.com/Transporte/api/marcarAsistencia","id=" + window.localStorage.getItem("id"))
+			.then(function(response){
+				if(response.data.success){
+					window.localStorage.setItem("asistencia", moment().set({'hour': 0, 'minute': 0, 'second': 0}).format());
+				}else{
+					alert("Ya habias marcado asistencia");
+				}
+
+				// loadModule(global_data['next_url']);
+				location.reload()
+			})
+		})
+	})
+</script>

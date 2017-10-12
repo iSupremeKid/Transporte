@@ -1,0 +1,94 @@
+<p style="margin: 0;">Credito:</p>
+<h1 id="balance"><sup>s/</sup><span>...<span></h1>
+<hr>
+<button id="rechargeFormToggle" class="ui-btn">Recargar saldo</button>
+<div id="containerRechargeForm" style="display: none;" class="ui-body ui-body-a ui-corner-all">
+    <form id="rechargeForm" class="ui-field-contain">
+        <label for="input_recharge">Ingresa el monto a recargar</label>
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+            <input min="5" type="number" step="any"  name="input_recharge" id="input_recharge" placeholder="" value="" required>
+        </div>
+        
+        <button type="submit" class="ui-shadow ui-btn ui-mini">Siguiente</button>
+    </form>
+</div>
+<script>
+	$balance = $("h1#balance > span");
+    $rechargeForm = $("#rechargeForm");
+    $containerRechargeForm = $("#containerRechargeForm");
+	axios({
+        method: "get",
+        url: "http://www.rick-garcia.com/Transporte/api/checkUserExist/" + window.localStorage.getItem("telefono"),
+        data: {}
+    })
+    .then(function(response){
+    	response = response.data;
+    	$balance.html(response.data.saldo_disponible);
+    });
+    
+    $("#rechargeFormToggle").click(function(){
+        $containerRechargeForm.toggle()
+    });
+
+    $rechargeForm
+    .submit(function(e){
+        e.preventDefault();
+        
+        $.mobile.loading('show', {
+          theme: "b"
+        });
+
+        var amount = $(this)
+        .find("input#input_recharge")
+        .val()
+        global_data.amount = amount * 100;
+        Culqi.settings({
+            title: 'Transporte',
+            currency: 'PEN',
+            description: 'Carga de ' + amount + ' soles.',
+            amount: global_data.amount
+        });
+        $.mobile.loading('hide');
+        Culqi.open();
+    })
+
+    function culqi() {
+
+        if(Culqi.token) {
+            $.mobile.loading('show', {
+              theme: "b"
+            });
+
+            var token = Culqi.token.id;
+            axios
+            .post(
+                "http://www.rick-garcia.com/Transporte/api/purchaseCallBack/",
+                $.param({
+                    "id": window.localStorage.getItem("id"),
+                    "amount": global_data.amount,
+                    "card": Culqi.token.last_four,
+                    "email": Culqi.token.email,
+                    "token": Culqi.token.id
+                }))
+            .then(function(response){
+
+                $.mobile.loading('hide');
+                response = response.data;
+                if(response.success){
+                    alert("Carga exitosa!");
+                    $("input#input_recharge").val("");
+                    $containerRechargeForm.toggle();
+                    $balance.html(response.data.saldo_disponible);
+                }else{
+                    alert("Ocurrio un error, prueba en unos momentos.")
+                }
+
+            })
+        }else{
+            console.log(Culqi.error);
+            alert(Culqi.error.mensaje);
+        }
+    };
+    
+        
+</script>

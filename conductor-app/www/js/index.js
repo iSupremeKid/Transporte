@@ -1,46 +1,109 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+var global_data = {};
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+$(document).on('ready',function(){
+    if(!!window.localStorage.getItem("id")){
+        $.mobile.navigate( "#main" ,{});
     }
-};
 
-app.initialize();
+    // User phone
+    $("#loginPhoneForm")
+    .submit(function(e){
+        e.preventDefault();
+        $.mobile.loading('show', {
+          theme: "b"
+        });
+        
+        $form = $(this)
+
+        axios.post("http://www.rick-garcia.com/Transporte/api/driverLogin/",$form.serialize())
+        .then(function(response){
+            response = response.data;
+            if(response.success){
+                window.localStorage.setItem("name", response.data.nombre_persona + " " + response.data.apepat_persona + " " + response.data.apemat_persona);
+                window.localStorage.setItem("id", response.data.id);
+                window.localStorage.setItem("email", response.data.email);
+                window.localStorage.setItem("persona_id", response.data.persona_id);
+                window.localStorage.setItem("asistencia", "");
+                $.mobile.navigate( "#main" ,{});
+            }else{
+                alert("Datos Incorrectos")
+            }
+        },function(){
+            alert("Error! Prueba en 5 minutos");
+        })
+        .then(function(){
+            $.mobile.loading('hide');
+        })
+    })
+
+
+    $("#registerUserForm")
+    .submit(function(e){
+        e.preventDefault();
+        var nuevos_datos = $(this).serializeArray();
+        nuevos_datos.push({name:"telefono",value: global_data.number});
+        console.log("enviando",nuevos_datos)
+        axios.post('http://www.rick-garcia.com/Transporte/api/registerUser',$.param(nuevos_datos))
+        .then(function(response){
+            user = response.data;
+            window.localStorage.setItem("nombre", user.data.nombres + " " + user.data.apellido_paterno);
+            window.localStorage.setItem("dni", user.data.identificacion);
+            window.localStorage.setItem("id", user.data.id);
+            window.localStorage.setItem("telefono", user.data.telefono);
+            $.mobile.navigate( "#main" ,{});
+        })
+    })
+
+
+    $( document ).on( "pagecreate", "#main", function() {
+        $( document ).on( "swipeleft swiperight", "#main", function( e ) {
+            if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+                if ( e.type === "swipeleft" ) {
+                    $( "#sidebar" ).panel( "open" );
+                }
+            }
+        });
+    });
+
+    $("#btnCerrarSesion")
+    .click(function(e){
+        e.preventDefault();
+        if(confirm("Deseas cerrar sesion?")){
+            window.localStorage.clear();
+            $.mobile.navigate( "#loginUserPhone" ,{});
+        }
+    })
+
+
+    $("#user_name_label").html(window.localStorage.getItem("nombre")).css('textTransform', 'capitalize');
+    $("#dni_label").html(window.localStorage.getItem("dni"));
+
+    var $container = $("#container");
+
+    var loadModule = function(name){
+
+        var t_asistencia = window.localStorage.getItem('asistencia');
+        var m_asistencia = moment(t_asistencia)
+        var m_e_asistencia = moment(m_asistencia).add(1, 'days');
+
+        console.log(m_asistencia.format(),m_e_asistencia.format())
+
+        if(!moment().isBetween(t_asistencia, m_e_asistencia)){
+            global_data['next_url'] = name;
+            name = "marcar_asistencia"
+        }
+        // $( "#sidebar" ).panel( "close" );
+        $container.load("pantallas/" + name + ".html").trigger("create");
+        // alert($(this).data('page'))
+    }
+
+    $(".optMenu")
+    .click(function(){
+        loadModule($(this).data('page'));
+    })
+    loadModule('cobrar');
+    
+});
+

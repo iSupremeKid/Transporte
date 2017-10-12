@@ -1,0 +1,44 @@
+<div class="ui-field-contain">
+    <label for="select-native-1">En que paradero estas:</label>
+    <select id="seleccionar paradero">
+        <option value="1">The 1st Option</option>
+    </select>
+</div>
+<div id="botonera">
+	<button id="scan">Escanear App/DNI</button>
+	<h2>o</h2>
+	<button id="money">Cobrar</button>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("button#scan").click(function(e){
+			e.preventDefault();
+			$btn = $(this);
+			cordova.plugins.barcodeScanner.scan(
+		      function (result) {
+				$.mobile.loading('show',{
+					text: 'Procesando ...',
+					textVisible: true
+				});
+
+				console.log(result);
+		      },
+		      function (error) {
+		          alert("Error: " + error);
+		      },
+		      {
+		          preferFrontCamera : false, // iOS and Android
+		          showFlipCameraButton : false, // iOS and Android
+		          showTorchButton : false, // iOS and Android
+		          torchOn: false, // Android, launch with the torch switched on (if available)
+		          saveHistory: true, // Android, save scan history (default false)
+		          prompt : "Ubica el codigo en el centro de la camara.", // Android
+		          resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 
+		          disableAnimations : true, // iOS
+		          disableSuccessBeep: true // iOS and Android
+		      }
+		   );
+		})
+	});
+</script>
