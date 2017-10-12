@@ -13,9 +13,13 @@
         "plugins": {
             "phonegap-plugin-barcodescanner": {},
             "cordova-plugin-whitelist": {}
-        }
+        },
+        "platforms": [
+            "ios"
+        ]
     },
     "dependencies": {
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-whitelist": "1",
         "phonegap-plugin-barcodescanner": "~6.0.8"
     }
