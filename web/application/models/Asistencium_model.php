@@ -39,6 +39,13 @@ class Asistencium_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    function verifyAsistencia($user_id,$fecha){
+        $this->db->select('*');
+        $this->db->from('asistencia');
+        $this->db->where("usuario_id = {$user_id} AND SUBSTRING(hora,1,10) = SUBSTRING('{$fecha}',1,10)");
+        return $this->db->get()->row_array();
+    }
+
     /*
      * function to add new asistencium
      */
