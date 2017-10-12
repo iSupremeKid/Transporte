@@ -21,6 +21,35 @@ class Api extends CI_Controller{
 
   }
 
+  function marcarAsistencia(){
+    $user_id = $this->input->post('id');
+    $fecha = date('Y-m-d H:i:s');
+    $this->load->model('Asistencium_model');
+    $resultado = $this->Asistencium_model->verifyAsistencia($user_id, $fecha);
+    if ($resultado) {
+             return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }else{
+                  $params = array(
+                    'usuario_id' => $user_id,
+                    'hora' => $fecha,
+                    'estado' => 1,
+                  );
+
+            $this->Asistencium_model->add_asistencium($params);
+               return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true
+              )));
+
+    }
+
+  }
+
   function driverLogin(){
     $user = $this->input->post('user');
     $password = $this->input->post('password');
