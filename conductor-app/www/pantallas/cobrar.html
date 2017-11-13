@@ -1,19 +1,55 @@
 <div class="ui-field-contain">
     <label for="select-native-1">En que paradero estas:</label>
-    <select id="seleccionar paradero">
-        <option value="1">The 1st Option</option>
+    <select id="seleccionar_paradero">
+        <option value="">[ Selecciona ]</option>
     </select>
 </div>
 <div id="botonera">
-	<button id="scan">Escanear App/DNI</button>
+	<button disabled class="btnCobrarParadero" id="scan">Escanear App/DNI</button>
 	<h2>o</h2>
-	<button id="money">Cobrar</button>
+	<button disabled class="btnCobrarParadero" id="money">Cobrar</button>
 </div>
 
 <script>
 	$(document).ready(function(){
+
+		var $seleccionarParadero = $("select#seleccionar_paradero");
+		var btns = $("button.btnCobrarParadero");
+
+		$.get("http://www.rick-garcia.com/Transporte/api/listarParaderosPorTipoTransporte/1",function(response){
+			var data = response.data;
+			var f = "";
+			for(x in data){
+				f += "<option value='" + data[x].id + "'>" + data[x].nombre + "</option>";
+			}
+			$seleccionarParadero.append(f)
+		})
+
+		$seleccionarParadero.change(function(e){
+			if($(this).val() !== ""){
+				btns.removeProp("disabled")
+			}else{
+				btns.attr("disabled")
+			}
+		})
+
+		$("button#money").click(function(e){
+			e.preventDefault();
+
+			if(!$seleccionarParadero.val()){
+				alert("No haz seleccionado un paradero!");
+				return;
+			}
+		})
+
 		$("button#scan").click(function(e){
 			e.preventDefault();
+
+			if(!$seleccionarParadero.val()){
+				alert("No haz seleccionado un paradero!");
+				return;
+			}
+
 			$btn = $(this);
 			cordova.plugins.barcodeScanner.scan(
 		      function (result) {

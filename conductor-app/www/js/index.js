@@ -2,7 +2,7 @@ var global_data = {};
 
 
 
-$(document).on('ready',function(){
+$(document).bind('pageinit',function(){
     if(!!window.localStorage.getItem("id")){
         $.mobile.navigate( "#main" ,{});
     }
@@ -21,6 +21,7 @@ $(document).on('ready',function(){
         .then(function(response){
             response = response.data;
             if(response.success){
+                alert(JSON.stringify(response.data))
                 window.localStorage.setItem("name", response.data.nombre_persona + " " + response.data.apepat_persona + " " + response.data.apemat_persona);
                 window.localStorage.setItem("id", response.data.id);
                 window.localStorage.setItem("email", response.data.email);
@@ -82,20 +83,25 @@ $(document).on('ready',function(){
 
     var $container = $("#container");
 
-    var loadModule = function(name){
+    var loadModule = function(name) {
 
-        var t_asistencia = window.localStorage.getItem('asistencia');
-        var m_asistencia = moment(t_asistencia)
-        var m_e_asistencia = moment(m_asistencia).add(1, 'days');
+        $.mobile.loading('show', {
+          theme: "b"
+        });
 
-        console.log(m_asistencia.format(),m_e_asistencia.format())
 
-        if(!moment().isBetween(t_asistencia, m_e_asistencia)){
+        var today = moment().format("MM-DD-YYYY");
+        if(today !== window.localStorage.getItem('asistencia')){
             global_data['next_url'] = name;
             name = "marcar_asistencia"
         }
         // $( "#sidebar" ).panel( "close" );
-        $container.load("pantallas/" + name + ".html").trigger("create");
+        $container.load("pantallas/" + name + ".html",function(d){
+            $(this).trigger("create");
+            $.mobile.loading('hide');
+        })
+        // $container.enhanceWithin()
+        // $container.trigger("create")
         // alert($(this).data('page'))
     }
 
@@ -103,7 +109,8 @@ $(document).on('ready',function(){
     .click(function(){
         loadModule($(this).data('page'));
     })
-    loadModule('cobrar');
+
+    loadModule("cobrar")
     
 });
 
