@@ -1,5 +1,6 @@
 var global_data = {};
 
+var loadModule = null;
 
 
 $(document).bind('pageinit',function(){
@@ -21,7 +22,6 @@ $(document).bind('pageinit',function(){
         .then(function(response){
             response = response.data;
             if(response.success){
-                alert(JSON.stringify(response.data))
                 window.localStorage.setItem("name", response.data.nombre_persona + " " + response.data.apepat_persona + " " + response.data.apemat_persona);
                 window.localStorage.setItem("id", response.data.id);
                 window.localStorage.setItem("email", response.data.email);
@@ -83,12 +83,11 @@ $(document).bind('pageinit',function(){
 
     var $container = $("#container");
 
-    var loadModule = function(name) {
+    loadModule = function(name) {
 
         $.mobile.loading('show', {
           theme: "b"
         });
-
 
         var today = moment().format("MM-DD-YYYY");
         if(today !== window.localStorage.getItem('asistencia')){

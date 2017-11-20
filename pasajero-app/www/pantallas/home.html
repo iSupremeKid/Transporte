@@ -3,5 +3,8 @@
 	<div id="qrcode"></div>
 </center>
 <script>
-	$('#qrcode').qrcode(window.localStorage.getItem("dni"));
+	$(document).ready(function(){
+                        console.log(window.localStorage)
+		$('#qrcode').qrcode(window.localStorage.getItem("dni"));
+	})
 </script>

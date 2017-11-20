@@ -1,6 +1,6 @@
 <div class="ui-field-contain">
     <label for="select-native-1">En que paradero estas:</label>
-    <select id="seleccionar_paradero">
+    <select id="seleccionar_paradero"  data-theme="b">
         <option value="">[ Selecciona ]</option>
     </select>
 </div>
@@ -27,19 +27,17 @@
 
 		$seleccionarParadero.change(function(e){
 			if($(this).val() !== ""){
-				btns.removeProp("disabled")
+				btns.removeProp("disabled");
 			}else{
-				btns.attr("disabled")
+				btns.prop('disabled', true);
 			}
 		})
 
 		$("button#money").click(function(e){
-			e.preventDefault();
+			// e.preventDefault();
 
-			if(!$seleccionarParadero.val()){
-				alert("No haz seleccionado un paradero!");
-				return;
-			}
+			// $.mobile.changePage( "./pantallas/recargar.html", { role: "dialog" } );
+			loadModule("cobrar")
 		})
 
 		$("button#scan").click(function(e){

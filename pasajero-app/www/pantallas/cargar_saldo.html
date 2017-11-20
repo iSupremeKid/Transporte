@@ -34,6 +34,9 @@
     .submit(function(e){
         e.preventDefault();
         
+
+        console.log("Recharge Form submited");
+
         $.mobile.loading('show', {
           theme: "b"
         });
@@ -53,13 +56,17 @@
     })
 
     function culqi() {
-
+        console.log("Culqi func invoked");
         if(Culqi.token) {
             $.mobile.loading('show', {
               theme: "b"
             });
 
+            console.log("Habemus token");
+
             var token = Culqi.token.id;
+
+            console.log("Doin post axios");
             axios
             .post(
                 "http://www.rick-garcia.com/Transporte/api/purchaseCallBack/",
@@ -72,9 +79,12 @@
                 }))
             .then(function(response){
 
+                console.log("Post!",response);
+
                 $.mobile.loading('hide');
                 response = response.data;
                 if(response.success){
+                    console.log("Success");
                     alert("Carga exitosa!");
                     $("input#input_recharge").val("");
                     $containerRechargeForm.toggle();

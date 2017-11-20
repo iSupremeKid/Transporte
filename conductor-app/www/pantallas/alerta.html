@@ -1,0 +1,15 @@
+<select name="alerta_tipo" id="alerta_tipo">
+	<option value="">[ Selecciona tipo de alerta ]</option>
+	<option value="1">Emergencia</option>
+	<option value="2">Unidad malograda</option>
+	<option value="3">Congestión en paradero</option>
+</select>
+<textarea name="texto_alerta" id="texto_alerta" rows="6" placeholder="Escribe el mensaje de alerta"></textarea>
+<button data-theme="b" id="send_alerta">Enviar</button>
+<script>
+	$(document).ready(function(){
+		$("#send_alerta").click(function(e){
+			alert("La alerta ha sido enviada!");
+		})
+	})
+</script>

@@ -82,7 +82,9 @@ $(document).on('deviceready',function(){
                         window.localStorage.setItem("dni", user.data.identificacion);
                         window.localStorage.setItem("id", user.data.id);
                         window.localStorage.setItem("telefono", user.data.telefono);
-                        $.mobile.navigate( "#main" ,{});
+                        console.log(window.localStorage)
+                        alert("Bienvenido nuevamente " + user.data.nombres + "!")
+                        location.reload()
                     }else{
                         $.mobile.navigate( "#registerUser" ,{});
                     }
@@ -112,7 +114,9 @@ $(document).on('deviceready',function(){
             window.localStorage.setItem("dni", user.data.identificacion);
             window.localStorage.setItem("id", user.data.id);
             window.localStorage.setItem("telefono", user.data.telefono);
-            $.mobile.navigate( "#main" ,{});
+            // $.mobile.navigate( "#main" ,{});
+            alert("Bienvenido " + user.data.nombres + "!")
+            location.reload()
         })
     })
 
@@ -145,9 +149,13 @@ $(document).on('deviceready',function(){
     $(".optMenu")
     .click(function(){
         $( "#sidebar" ).panel( "close" );
-        $container.load("pantallas/" + $(this).data('page') + ".html")
+        $container.load("pantallas/" + $(this).data('page') + ".html",function(data){
+            $container.trigger("create")
+        });
         // alert($(this).data('page'))
     })
-    $container.load("pantallas/home.html")
+    $container.load("pantallas/home.html",function(data){
+        $container.trigger("create")
+    });
 });
 
