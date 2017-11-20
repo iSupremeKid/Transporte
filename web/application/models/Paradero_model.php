@@ -31,6 +31,10 @@ class Paradero_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    function getParaderosByTipoTransporte($tipo_transporte_id){
+      return $this->db->get_where('paradero',array('tipo_transporte_id'=>$tipo_transporte_id))->result_array();
+    }
+
     /*
      * function to add new paradero
      */

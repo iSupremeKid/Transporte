@@ -4,7 +4,7 @@
             <div class="box-header">
                 <h3 class="box-title">Listado de unidad de transporte</h3>
             	<div class="box-tools">
-                    <a href="<?php echo site_url('transporte_unidad/add'); ?>" class="btn btn-success btn-sm">Agregar</a>
+                    <a href="<?php echo site_url('transporte_unidad/add'); ?>" class="btn btn-success btn-sm">Add</a>
                 </div>
             </div>
             <div class="box-body">

@@ -103,7 +103,7 @@
                                             <a href="<?php echo site_url('reporte/asistencia');?>"><i class="fa fa-dashboard"></i> Asistencia</a>
                                         </li>
                         <li>
-                                            <a href="<?php echo site_url('reporte/asistencia');?>"><i class="fa fa-dashboard"></i> Transporte</a>
+                                            <a href="<?php echo site_url('reporte/transporte');?>"><i class="fa fa-dashboard"></i> Transporte</a>
                                         </li>
         							</ul>
                                 </li>

@@ -19,6 +19,10 @@ class Persona_model extends CI_Model
         return $this->db->get_where('persona',array('id'=>$id))->row_array();
     }
 
+    function get_persona_by_identificacion($identificacion){
+      return $this->db->get_where('persona',array('identificacion'=>$identificacion))->row_array();
+    }
+
     function get_persona_by_number($telefono){
       $this->db->select('pe.*, pp.nombre as nombre_tipo_perfil');
       $this->db->from('persona pe, persona_perfil pp');

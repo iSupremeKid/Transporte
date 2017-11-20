@@ -6,6 +6,276 @@ class Api extends CI_Controller{
     parent::__construct();
   }
 
+  function listarTransporteUnidad(){
+    $this->load->model('Transporte_unidad_model');
+    $unidades = $this->Transporte_unidad_model->get_all_transporte_unidad();
+    if ($unidades) {
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => true,
+                     'data' => $unidades
+             )));
+    }else{
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => false
+             )));
+    }
+  }
+
+  function listarParaderosPorTipoTransporte($tipo_transporte_id){
+    $this->load->model('Paradero_model');
+    $paraderos = $this->Paradero_model->getParaderosByTipoTransporte($tipo_transporte_id);
+    if ($paraderos) {
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => true,
+                     'data' => $paraderos
+             )));
+    }else{
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => false
+             )));
+    }
+  }
+
+
+  function ingresoConductorTransporte(){
+    $transporte_unidad_id = $this->input->post('transporte_unidad_id');
+    $usuario_id = $this->input->post('usuario_id');
+    $paradero_id = $this->input->post('paradero_id');
+    $fecha = date('Y-m-d H:i:s');
+    $tipo = 1;
+    $estado = 1;
+
+    $params = array(
+    'transporte_unidad_id' => $transporte_unidad_id,
+    'usuario_id' => $usuario_id,
+    'paradero_id' => $paradero_id,
+    'tipo' => $tipo,
+    'fecha' => $fecha,
+    'estado' => $estado,
+    );
+    $this->load->model('Conductor_transporte_model');
+    $conductor_transporte_id = $this->Conductor_transporte_model->add_conductor_transporte($params);
+
+    if ($conductor_transporte_id) {
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => true
+             )));
+    }else{
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => false
+             )));
+    }
+
+  }
+
+  function  salidaConductorTransporte(){
+    $transporte_unidad_id = $this->input->post('transporte_unidad_id');
+    $usuario_id = $this->input->post('usuario_id');
+    $paradero_id = $this->input->post('paradero_id');
+    $fecha = date('Y-m-d H:i:s');
+    $tipo = 2;
+    $estado = 1;
+
+    $params = array(
+    'transporte_unidad_id' => $transporte_unidad_id,
+    'usuario_id' => $usuario_id,
+    'paradero_id' => $paradero_id,
+    'tipo' => $tipo,
+    'fecha' => $fecha,
+    'estado' => $estado,
+    );
+    $this->load->model('Conductor_transporte_model');
+    $conductor_transporte_id = $this->Conductor_transporte_model->add_conductor_transporte($params);
+
+    if ($conductor_transporte_id) {
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => true
+             )));
+    }else{
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => false
+             )));
+    }
+  }
+
+
+  function cobrarPasaje(){
+    $identificacion = $this->input->post('identificacion');
+    $paradero_id = $this->input->post('paradero_id');
+    $transporte_unidad_id = $this->input->post('transporte_unidad_id');
+    $this->load->model('Persona_model');
+    $persona = $this->Persona_model->get_persona_by_identificacion($identificacion);
+    if ($persona) {
+      $saldo_disponible = $persona['saldo_disponible'];
+      $persona_perfil_id = $persona['persona_perfil_id'];
+      if ($persona_perfil_id == 1) {
+        if ($saldo_disponible < 1.5) {
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => false,
+                         'message' => 'No posee dinero suficiente'
+                 )));
+        }else{
+          $saldo_nuevo = $saldo_disponible - 1.5;
+          $params = array(
+            'saldo_disponible' => $saldo_nuevo
+          );
+          $this->Persona_model->update_persona($persona['id'],$params);
+          $this->load->model('Persona_viaje_model');
+          $params = array(
+            'persona_id' => $persona['id'],
+            'paradero_id' => $paradero_id,
+            'transporte_unidad_id' => $transporte_unidad_id,
+            'persona_perfil_id' => $persona['persona_perfil_id'],
+            'precio' => 1.5,
+            'fecha' => date('Y-m-d H:i:s'),
+            'estado' => 1,
+          );
+
+          $this->Persona_viaje_model->add_persona_viaje($params);
+
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => true
+                 )));
+        }
+      }else if($persona_perfil_id == 2){
+        if ($saldo_disponible < 0.75) {
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => false,
+                         'message' => 'No posee dinero suficiente'
+                 )));
+        }else{
+          $saldo_nuevo = $saldo_disponible - 0.75;
+          $params = array(
+            'saldo_disponible' => $saldo_nuevo
+          );
+          $this->Persona_model->update_persona($persona['id'],$params);
+          $this->load->model('Persona_viaje_model');
+          $params = array(
+            'persona_id' => $persona['id'],
+            'paradero_id' => $paradero_id,
+            'transporte_unidad_id' => $transporte_unidad_id,
+            'persona_perfil_id' => $persona['persona_perfil_id'],
+            'precio' => 0.75,
+            'fecha' => date('Y-m-d H:i:s'),
+            'estado' => 1,
+          );
+
+          $this->Persona_viaje_model->add_persona_viaje($params);
+
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => true
+                 )));
+        }
+      }else if($persona_perfil_id == 3){
+        if ($saldo_disponible < 0.5) {
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => false,
+                         'message' => 'No posee dinero suficiente'
+                 )));
+        }else{
+          $saldo_nuevo = $saldo_disponible - 0.5;
+          $params = array(
+            'saldo_disponible' => $saldo_nuevo
+          );
+          $this->Persona_model->update_persona($persona['id'],$params);
+          $this->load->model('Persona_viaje_model');
+          $params = array(
+            'persona_id' => $persona['id'],
+            'paradero_id' => $paradero_id,
+            'transporte_unidad_id' => $transporte_unidad_id,
+            'persona_perfil_id' => $persona['persona_perfil_id'],
+            'precio' => 0.5,
+            'fecha' => date('Y-m-d H:i:s'),
+            'estado' => 1,
+          );
+
+          $this->Persona_viaje_model->add_persona_viaje($params);
+
+          return $this->output
+                 ->set_content_type('application/json')
+                 ->set_output(json_encode(array(
+                         'success' => true
+                 )));
+        }
+      }else if($persona_perfil_id == 4){
+
+        $this->load->model('Persona_viaje_model');
+        $params = array(
+          'persona_id' => $persona['id'],
+          'paradero_id' => $paradero_id,
+          'transporte_unidad_id' => $transporte_unidad_id,
+          'persona_perfil_id' => $persona['persona_perfil_id'],
+          'precio' => 0,
+          'fecha' => date('Y-m-d H:i:s'),
+          'estado' => 1,
+        );
+
+        $this->Persona_viaje_model->add_persona_viaje($params);
+        return $this->output
+               ->set_content_type('application/json')
+               ->set_output(json_encode(array(
+                       'success' => true
+               )));
+      }else if($persona_perfil_id == 5){
+        $this->load->model('Persona_viaje_model');
+        $params = array(
+          'persona_id' => $persona['id'],
+          'paradero_id' => $paradero_id,
+          'transporte_unidad_id' => $transporte_unidad_id,
+          'persona_perfil_id' => $persona['persona_perfil_id'],
+          'precio' => 0,
+          'fecha' => date('Y-m-d H:i:s'),
+          'estado' => 1,
+        );
+
+        $this->Persona_viaje_model->add_persona_viaje($params);
+        return $this->output
+               ->set_content_type('application/json')
+               ->set_output(json_encode(array(
+                       'success' => true
+               )));
+
+      }
+    }else{
+      return $this->output
+             ->set_content_type('application/json')
+             ->set_output(json_encode(array(
+                     'success' => false,
+                     'message' => 'Persona no existe.'
+             )));
+    }
+  }
+
+
+
+
+
   function _httpPost($url, $data)
   {
       $curl = curl_init($url);
@@ -49,6 +319,7 @@ class Api extends CI_Controller{
     }
 
   }
+
 
   function driverLogin(){
     $user = $this->input->post('user');
@@ -244,7 +515,7 @@ class Api extends CI_Controller{
 
     $culqi_response =  json_decode($server_output);
 
-
+    error_reporting(0);
 
 
 
