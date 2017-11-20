@@ -83,6 +83,8 @@ $(document).bind('pageinit',function(){
 
     var $container = $("#container");
 
+    var firstRequest = true;
+
     loadModule = function(name) {
 
         $.mobile.loading('show', {
@@ -90,24 +92,41 @@ $(document).bind('pageinit',function(){
         });
 
         var today = moment().format("MM-DD-YYYY");
+        var blocked = false;
         if(today !== window.localStorage.getItem('asistencia')){
             global_data['next_url'] = name;
-            name = "marcar_asistencia"
+            name = "marcar_asistencia";
+            blocked = true;
+            
         }
         // $( "#sidebar" ).panel( "close" );
         $container.load("pantallas/" + name + ".html",function(d){
             $(this).trigger("create");
             $.mobile.loading('hide');
+            if(blocked){
+                if(firstRequest === true){
+                    firstRequest = false;
+                }else{
+                    alert("Debes marcar asistencia primero!");
+                }
+            }
         })
         // $container.enhanceWithin()
         // $container.trigger("create")
         // alert($(this).data('page'))
     }
 
-    $(".optMenu")
-    .click(function(){
+    // $(".optMenu")
+    // .click(function(e){
+    //     e.stopImmediatePropagation();
+    //     loadModule($(this).data('page'));
+    // })
+
+    $('body').on('click','.optMenu',function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
         loadModule($(this).data('page'));
-    })
+    });
 
     loadModule("cobrar")
     
