@@ -16,7 +16,7 @@
 		var $seleccionarParadero = $("select#seleccionar_paradero");
 		var btns = $("button.btnCobrarParadero");
 
-		$.get("http://www.rick-garcia.com/Transporte/api/listarParaderosPorTipoTransporte/1",function(response){
+		$.get("http://www.rick-garcia.com/Transporte/api/listarParaderosPorTipoTransporte/" + window.localStorage.getItem("en_ruta"),function(response){
 			var data = response.data;
 			var f = "";
 			for(x in data){
@@ -62,15 +62,15 @@
 		          alert("Error: " + error);
 		      },
 		      {
-		          preferFrontCamera : false, // iOS and Android
-		          showFlipCameraButton : false, // iOS and Android
-		          showTorchButton : false, // iOS and Android
-		          torchOn: false, // Android, launch with the torch switched on (if available)
-		          saveHistory: true, // Android, save scan history (default false)
-		          prompt : "Ubica el codigo en el centro de la camara.", // Android
-		          resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 
-		          disableAnimations : true, // iOS
-		          disableSuccessBeep: true // iOS and Android
+		          preferFrontCamera : false,
+		          showFlipCameraButton : false,
+		          showTorchButton : false,
+		          torchOn: false,
+		          saveHistory: true,
+		          prompt : "Ubica el codigo en el centro de la camara.",
+		          resultDisplayDuration: 0,
+		          disableAnimations : true,
+		          disableSuccessBeep: true
 		      }
 		   );
 		})

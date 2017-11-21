@@ -97,15 +97,20 @@ $(document).bind('pageinit',function(){
             global_data['next_url'] = name;
             name = "marcar_asistencia";
             blocked = true;
-            
         }
+
+        if(name === "cobrar" && !window.localStorage.getItem("en_ruta")){
+            if(!firstRequest)
+                alert("No estas en ruta. Redirigiendote a la pantalla de marcado de ruta.");
+            name = "ruta";
+        }
+
         // $( "#sidebar" ).panel( "close" );
-        $container.load("pantallas/" + name + ".html",function(d){
+        $container.load("pantallas/" + name + ".html?" + (new Date()).getTime(),function(d){
             $(this).trigger("create");
             $.mobile.loading('hide');
             if(blocked){
                 if(firstRequest === true){
-                    firstRequest = false;
                 }else{
                     alert("Debes marcar asistencia primero!");
                 }
@@ -114,6 +119,8 @@ $(document).bind('pageinit',function(){
         // $container.enhanceWithin()
         // $container.trigger("create")
         // alert($(this).data('page'))
+        firstRequest = false;
+        
     }
 
     // $(".optMenu")

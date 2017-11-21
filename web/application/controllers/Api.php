@@ -569,4 +569,63 @@ class Api extends CI_Controller{
     }
 
   }
+
+  function marcarInicioRuta(){
+    $this->load->model('Conductor_transporte_model');
+    $new = array(
+      "transporte_unidad_id" => $this->input->post('transporte'),
+      "usuario_id" => $this->input->post('usuario'),
+      "paradero_id" => $this->input->post('paradero'),
+      "fecha" => date("Y-m-d H:i:s"),
+      "tipo" => "1",
+      "estado" => "1"
+    );
+
+    $actualizado = $this->Conductor_transporte_model->add_conductor_transporte($new);
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode(array(
+              'success' => true
+      )));
+  }
+
+  function marcarFinRuta(){
+    $this->load->model('Conductor_transporte_model');
+    $new = array(
+      "transporte_unidad_id" => $this->input->post('transporte'),
+      "usuario_id" => $this->input->post('usuario'),
+      "paradero_id" => $this->input->post('paradero'),
+      "fecha" => date("Y-m-d H:i:s"),
+      "tipo" => "2",
+      "estado" => "1"
+    );
+
+    $actualizado = $this->Conductor_transporte_model->add_conductor_transporte($new);
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode(array(
+              'success' => true
+      )));
+  }
+  
+  function postAlert(){
+    $this->load->model("Alertum_model");
+    $new = array(
+      "usuario_id" => $this->input->post('usuario'),
+      "tipo_alerta_id" => $this->input->post('alerta'),
+      "mensaje" => $this->input->post('mensaje'),
+      "fecha" => date("Y-m-d H:i:s"),
+      "estado" => "1"
+    );
+
+    $this->Alertum_model->update_alertum($new);
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode(array(
+        'success' => true
+      )));
+  }
 }

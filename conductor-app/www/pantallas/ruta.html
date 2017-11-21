@@ -1,0 +1,101 @@
+<div class="ui-field-contain">
+    <label id="labelVehiculo">Selecciona el vehiculo que estas <strong>abordando</strong>:</label>
+    <select id="seleccionar_ruta"  data-theme="b">
+        <option value="">[ Selecciona ]</option>
+    </select>
+	<br>
+	<br>
+	<br>
+	<label id="labelParadero">Selecciona el paradero <strong>inicial</strong>:</label>
+    <select id="seleccionar_paradero"  data-theme="b">
+        <option value="">[ Selecciona ]</option>
+    </select>
+</div>
+
+<button disabled class="btnMarcarRuta" id="btnMarcarRuta">Marcar ruta</button>
+
+<script>
+	$(document).ready(function(){
+		var marcaSalida = false;
+		var url_marca = "http://www.rick-garcia.com/Transporte/api/marcarInicioRuta";
+		if(!!window.localStorage.getItem("en_ruta")){
+			$("#labelVehiculo").html("Vas a marcar el <strong>fin de ruta</strong> con el vehiculo:");
+			$("#labelParadero").html("Selecciona el paradero <strong>final</strong>:");
+			marcaSalida = true;
+			url_marca = "http://www.rick-garcia.com/Transporte/api/marcarFinRuta";
+		}
+
+		var $seleccionarRuta = $("select#seleccionar_ruta");
+		var $seleccionarParadero = $("select#seleccionar_paradero");
+		var $btnMarcarRuta = $("button#btnMarcarRuta");
+
+		$.mobile.loading('show', {
+          theme: "b"
+        });
+		$.get("http://www.rick-garcia.com/Transporte/api/listarTransporteUnidad",function(response){
+			var data = response.data;
+			$.mobile.loading('hide');
+			var f = "";
+			for(x in data){
+				f += "<option value='" + data[x].id + "'>" + data[x].nom_tipo_transporte + " [ " + data[x].identificacion + " ]</option>";
+			}
+
+			$seleccionarRuta.append(f)
+
+			if(marcaSalida){
+				$seleccionarRuta.prop('disabled', true).find("option[value='" + window.localStorage.getItem("en_ruta") + "']").prop('selected', true);
+				$seleccionarRuta.trigger("change");
+			}
+		});
+
+		$seleccionarRuta.change(function(e){
+			var paraderoOpt = $("option.paradero_opt");
+			paraderoOpt.remove();
+
+			$.mobile.loading('show', {
+	          theme: "b"
+	        });
+
+			$.get("http://www.rick-garcia.com/Transporte/api/listarParaderosPorTipoTransporte/" + $(this).val(),function(response){
+				var data = response.data;
+				var f = "";
+				for(x in data){
+					f += "<option class='paradero_opt' value='" + data[x].id + "'>" + data[x].nombre + "</option>";
+				}
+				$seleccionarParadero.append(f)
+				$.mobile.loading('hide');
+			})
+		})
+
+		$seleccionarParadero.change(function(e){
+			if($(this).val() !== ""){
+				$btnMarcarRuta.removeProp("disabled");
+			}else{
+				$btnMarcarRuta.prop('disabled', true);
+			}
+		});
+
+		$btnMarcarRuta.click(function(e){
+			e.preventDefault();
+			if(confirm("Confirmar?")){
+				$.post(url_marca,{
+					"transporte": $seleccionarRuta.val(),
+					"usuario": window.localStorage.getItem("id"),
+					"paradero": $seleccionarParadero.val()
+				},function(data){
+					if(marcaSalida){
+						window.localStorage.removeItem("en_ruta");
+						alert("Fin de ruta exitoso!");
+						location.reload()
+					}else{
+						window.localStorage.setItem("en_ruta",$seleccionarRuta.val());
+						alert("Ruta fijada con exito. Redirigiendote a la pantalla de cobro.");
+						loadModule("cobrar");
+					}
+				})
+
+				
+			}
+		})
+	});
+</script>
