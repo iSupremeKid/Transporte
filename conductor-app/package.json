@@ -21,6 +21,7 @@
   "dependencies": {
     "cordova-ios": "^4.4.0",
     "cordova-plugin-whitelist": "1",
+    "ios-sim": "^6.1.2",
     "phonegap-plugin-barcodescanner": "~6.0.8"
   }
 }

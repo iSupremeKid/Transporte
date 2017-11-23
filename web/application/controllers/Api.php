@@ -115,162 +115,167 @@ class Api extends CI_Controller{
   }
 
 
-  function cobrarPasaje(){
-    $identificacion = $this->input->post('identificacion');
-    $paradero_id = $this->input->post('paradero_id');
-    $transporte_unidad_id = $this->input->post('transporte_unidad_id');
-    $this->load->model('Persona_model');
-    $persona = $this->Persona_model->get_persona_by_identificacion($identificacion);
-    if ($persona) {
-      $saldo_disponible = $persona['saldo_disponible'];
-      $persona_perfil_id = $persona['persona_perfil_id'];
-      if ($persona_perfil_id == 1) {
-        if ($saldo_disponible < 1.5) {
-          return $this->output
-                 ->set_content_type('application/json')
-                 ->set_output(json_encode(array(
-                         'success' => false,
-                         'message' => 'No posee dinero suficiente'
-                 )));
-        }else{
-          $saldo_nuevo = $saldo_disponible - 1.5;
-          $params = array(
-            'saldo_disponible' => $saldo_nuevo
-          );
-          $this->Persona_model->update_persona($persona['id'],$params);
+
+    function cobrarPasaje(){
+      $identificacion = $this->input->post('identificacion');
+      $paradero_id = $this->input->post('paradero_id');
+      $transporte_unidad_id = $this->input->post('transporte_unidad_id');
+      $this->load->model('Persona_model');
+      $persona = $this->Persona_model->get_persona_by_identificacion($identificacion);
+      if ($persona) {
+        $saldo_disponible = $persona['saldo_disponible'];
+        $persona_perfil_id = $persona['persona_perfil_id'];
+        if ($persona_perfil_id == 1) {
+          if ($saldo_disponible < 1.5) {
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => false,
+                           'type' => 0,
+                           'message' => 'No posee dinero suficiente'
+                   )));
+          }else{
+            $saldo_nuevo = $saldo_disponible - 1.5;
+            $params = array(
+              'saldo_disponible' => $saldo_nuevo
+            );
+            $this->Persona_model->update_persona($persona['id'],$params);
+            $this->load->model('Persona_viaje_model');
+            $params = array(
+              'persona_id' => $persona['id'],
+              'paradero_id' => $paradero_id,
+              'transporte_unidad_id' => $transporte_unidad_id,
+              'persona_perfil_id' => $persona['persona_perfil_id'],
+              'precio' => 1.5,
+              'fecha' => date('Y-m-d H:i:s'),
+              'estado' => 1,
+            );
+
+            $this->Persona_viaje_model->add_persona_viaje($params);
+
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => true
+                   )));
+          }
+        }else if($persona_perfil_id == 2){
+          if ($saldo_disponible < 0.75) {
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => false,
+                           'type' => 0,
+                           'message' => 'No posee dinero suficiente'
+                   )));
+          }else{
+            $saldo_nuevo = $saldo_disponible - 0.75;
+            $params = array(
+              'saldo_disponible' => $saldo_nuevo
+            );
+            $this->Persona_model->update_persona($persona['id'],$params);
+            $this->load->model('Persona_viaje_model');
+            $params = array(
+              'persona_id' => $persona['id'],
+              'paradero_id' => $paradero_id,
+              'transporte_unidad_id' => $transporte_unidad_id,
+              'persona_perfil_id' => $persona['persona_perfil_id'],
+              'precio' => 0.75,
+              'fecha' => date('Y-m-d H:i:s'),
+              'estado' => 1,
+            );
+
+            $this->Persona_viaje_model->add_persona_viaje($params);
+
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => true
+                   )));
+          }
+        }else if($persona_perfil_id == 3){
+          if ($saldo_disponible < 0.5) {
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => false,
+                           'type' => 0,
+                           'message' => 'No posee dinero suficiente'
+                   )));
+          }else{
+            $saldo_nuevo = $saldo_disponible - 0.5;
+            $params = array(
+              'saldo_disponible' => $saldo_nuevo
+            );
+            $this->Persona_model->update_persona($persona['id'],$params);
+            $this->load->model('Persona_viaje_model');
+            $params = array(
+              'persona_id' => $persona['id'],
+              'paradero_id' => $paradero_id,
+              'transporte_unidad_id' => $transporte_unidad_id,
+              'persona_perfil_id' => $persona['persona_perfil_id'],
+              'precio' => 0.5,
+              'fecha' => date('Y-m-d H:i:s'),
+              'estado' => 1,
+            );
+
+            $this->Persona_viaje_model->add_persona_viaje($params);
+
+            return $this->output
+                   ->set_content_type('application/json')
+                   ->set_output(json_encode(array(
+                           'success' => true
+                   )));
+          }
+        }else if($persona_perfil_id == 4){
+
           $this->load->model('Persona_viaje_model');
           $params = array(
             'persona_id' => $persona['id'],
             'paradero_id' => $paradero_id,
             'transporte_unidad_id' => $transporte_unidad_id,
             'persona_perfil_id' => $persona['persona_perfil_id'],
-            'precio' => 1.5,
+            'precio' => 0,
             'fecha' => date('Y-m-d H:i:s'),
             'estado' => 1,
           );
 
           $this->Persona_viaje_model->add_persona_viaje($params);
-
           return $this->output
                  ->set_content_type('application/json')
                  ->set_output(json_encode(array(
                          'success' => true
                  )));
-        }
-      }else if($persona_perfil_id == 2){
-        if ($saldo_disponible < 0.75) {
-          return $this->output
-                 ->set_content_type('application/json')
-                 ->set_output(json_encode(array(
-                         'success' => false,
-                         'message' => 'No posee dinero suficiente'
-                 )));
-        }else{
-          $saldo_nuevo = $saldo_disponible - 0.75;
-          $params = array(
-            'saldo_disponible' => $saldo_nuevo
-          );
-          $this->Persona_model->update_persona($persona['id'],$params);
+        }else if($persona_perfil_id == 5){
           $this->load->model('Persona_viaje_model');
           $params = array(
             'persona_id' => $persona['id'],
             'paradero_id' => $paradero_id,
             'transporte_unidad_id' => $transporte_unidad_id,
             'persona_perfil_id' => $persona['persona_perfil_id'],
-            'precio' => 0.75,
+            'precio' => 0,
             'fecha' => date('Y-m-d H:i:s'),
             'estado' => 1,
           );
 
           $this->Persona_viaje_model->add_persona_viaje($params);
-
           return $this->output
                  ->set_content_type('application/json')
                  ->set_output(json_encode(array(
                          'success' => true
                  )));
+
         }
-      }else if($persona_perfil_id == 3){
-        if ($saldo_disponible < 0.5) {
-          return $this->output
-                 ->set_content_type('application/json')
-                 ->set_output(json_encode(array(
-                         'success' => false,
-                         'message' => 'No posee dinero suficiente'
-                 )));
-        }else{
-          $saldo_nuevo = $saldo_disponible - 0.5;
-          $params = array(
-            'saldo_disponible' => $saldo_nuevo
-          );
-          $this->Persona_model->update_persona($persona['id'],$params);
-          $this->load->model('Persona_viaje_model');
-          $params = array(
-            'persona_id' => $persona['id'],
-            'paradero_id' => $paradero_id,
-            'transporte_unidad_id' => $transporte_unidad_id,
-            'persona_perfil_id' => $persona['persona_perfil_id'],
-            'precio' => 0.5,
-            'fecha' => date('Y-m-d H:i:s'),
-            'estado' => 1,
-          );
-
-          $this->Persona_viaje_model->add_persona_viaje($params);
-
-          return $this->output
-                 ->set_content_type('application/json')
-                 ->set_output(json_encode(array(
-                         'success' => true
-                 )));
-        }
-      }else if($persona_perfil_id == 4){
-
-        $this->load->model('Persona_viaje_model');
-        $params = array(
-          'persona_id' => $persona['id'],
-          'paradero_id' => $paradero_id,
-          'transporte_unidad_id' => $transporte_unidad_id,
-          'persona_perfil_id' => $persona['persona_perfil_id'],
-          'precio' => 0,
-          'fecha' => date('Y-m-d H:i:s'),
-          'estado' => 1,
-        );
-
-        $this->Persona_viaje_model->add_persona_viaje($params);
+      }else{
         return $this->output
                ->set_content_type('application/json')
                ->set_output(json_encode(array(
-                       'success' => true
+                       'success' => false,
+                       'type' => 1,
+                       'message' => 'Persona no existe.'
                )));
-      }else if($persona_perfil_id == 5){
-        $this->load->model('Persona_viaje_model');
-        $params = array(
-          'persona_id' => $persona['id'],
-          'paradero_id' => $paradero_id,
-          'transporte_unidad_id' => $transporte_unidad_id,
-          'persona_perfil_id' => $persona['persona_perfil_id'],
-          'precio' => 0,
-          'fecha' => date('Y-m-d H:i:s'),
-          'estado' => 1,
-        );
-
-        $this->Persona_viaje_model->add_persona_viaje($params);
-        return $this->output
-               ->set_content_type('application/json')
-               ->set_output(json_encode(array(
-                       'success' => true
-               )));
-
       }
-    }else{
-      return $this->output
-             ->set_content_type('application/json')
-             ->set_output(json_encode(array(
-                     'success' => false,
-                     'message' => 'Persona no existe.'
-             )));
     }
-  }
 
 
 
@@ -609,7 +614,7 @@ class Api extends CI_Controller{
               'success' => true
       )));
   }
-  
+
   function postAlert(){
     $this->load->model("Alertum_model");
     $new = array(
@@ -620,7 +625,7 @@ class Api extends CI_Controller{
       "estado" => "1"
     );
 
-    $this->Alertum_model->update_alertum($new);
+    $this->Alertum_model->add_alertum($new);
 
     $this->output
       ->set_content_type('application/json')
@@ -628,4 +633,52 @@ class Api extends CI_Controller{
         'success' => true
       )));
   }
+
+  function offlineCharge(){
+    $this->load->model("Historial_pago_model");
+    $this->load->model("Persona_model");
+
+
+
+    $monto = $this->input->post('monto');
+
+    $persona = $this->Persona_model->get_persona_by_identificacion($this->input->post('dni'));
+
+    $saldo_disponible = $persona['saldo_disponible'];
+    $nuevo_saldo = floatval($saldo_disponible) + floatval($monto);
+
+
+    $params = array(
+      'saldo_disponible' => $nuevo_saldo
+    );
+
+    $actualizado = $this->Persona_model->update_persona($persona['id'], $params);
+
+
+
+
+    $params = array(
+      'persona_id' => $persona['id'],
+      'origen' => 2,
+      'monto' => floatval($monto),
+      'fecha' => date("Y-m-d H:i:s"),
+      'tarjeta' => null,
+      'estado' => 1,
+    );
+    $this->Historial_pago_model->add_historial_pago($params);
+    if ($actualizado) {
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => true
+              )));
+    }else{
+      return $this->output
+              ->set_content_type('application/json')
+              ->set_output(json_encode(array(
+                      'success' => false
+              )));
+    }
+  }
+
 }

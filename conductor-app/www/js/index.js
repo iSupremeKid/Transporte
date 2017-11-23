@@ -1,9 +1,15 @@
 var global_data = {};
 
 var loadModule = null;
+var openModal = null;
 
+var modalDataTemp = null;
 
-$(document).bind('pageinit',function(){
+function chocolate(){
+    return "bakero"
+}
+
+$(document).ready(function(){
     if(!!window.localStorage.getItem("id")){
         $.mobile.navigate( "#main" ,{});
     }
@@ -85,6 +91,24 @@ $(document).bind('pageinit',function(){
 
     var firstRequest = true;
 
+    openModal = function(name,data){
+        $.mobile.changePage( "modal/" + name + ".html?" + (new Date()).getTime(), { role: "dialog" } );
+        modalDataTemp = data;
+        // $.get("modal/" + name + ".html",function(r){
+        //     console.log(r)
+        // })
+    }
+
+    $(document).on("pagechange",function(e,data){
+        if(data.options.role === "dialog"){
+            console.log(data)
+            if(!!data.options.data && !!data.options.data.dni){
+
+                $("input#iDNI").prop("readOnly",true).val(data.options.data.dni)
+            }
+        }
+    })
+
     loadModule = function(name) {
 
         $.mobile.loading('show', {
@@ -136,6 +160,28 @@ $(document).bind('pageinit',function(){
     });
 
     loadModule("cobrar")
+
+
+    $('body').delegate( "a#btnCargarSaldoModal", "click", function() {
+        var dni = $("input#iDNIModal").val();
+        var monto = parseFloat($("input#iMontoModal").val());
+
+        if(confirm("Cargar " + monto + " soles al DNI " + dni + "?")){
+            $.post("http://www.rick-garcia.com/Transporte/api/offlineCharge",{
+                dni: dni,
+                monto: monto
+            },function(data){
+                console.log(data);
+                if(data.success == true){
+                    alert("Carga realizada con exito");
+                }else{
+                    alert("No se pudo cargar, vuelve a intentar en unos momentos.");
+                }
+                $('#modal').dialog('close');
+            });
+        }
+
+    });
     
 });
 

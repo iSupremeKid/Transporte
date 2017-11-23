@@ -9,7 +9,26 @@
 <script>
 	$(document).ready(function(){
 		$("#send_alerta").click(function(e){
-			alert("La alerta ha sido enviada!");
+			$alerta_tipo = $("#alerta_tipo");
+			$texto_alerta = $("#texto_alerta");
+
+			if($alerta_tipo.val() !== "" && $texto_alerta.val().length > 3){
+				$.mobile.loading('show', {
+		          theme: "b"
+		        });
+				$.post("http://www.rick-garcia.com/Transporte/api/postAlert",{
+					usuario: window.localStorage.getItem("id"),
+					alerta: $alerta_tipo.val(),
+					mensaje: $texto_alerta.val(),
+				},function(response){
+					alert("La alerta ha sido enviada!");
+					$.mobile.loading('hide');
+					loadModule("cobrar");
+				})
+
+			}else{
+				alert("Revisa el formulario, recuerda que debes seleccionar el tipo de alerta y escribir un mensaje de almenos 3 caracteres.");
+			}
 		})
 	})
 </script>
