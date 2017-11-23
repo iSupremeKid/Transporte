@@ -634,6 +634,17 @@ class Api extends CI_Controller{
       )));
   }
 
+  function getAlertTypes(){
+    $this->load->model("Tipo_alertum_model"); 
+
+    return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array(
+                    'success' => true,
+                    'data' => $this->Tipo_alertum_model->get_all_tipo_alerta()
+            )));
+  }
+
   function offlineCharge(){
     $this->load->model("Historial_pago_model");
     $this->load->model("Persona_model");
